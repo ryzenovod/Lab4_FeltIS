@@ -12,62 +12,87 @@ namespace Lab4_FeltIS
         {
             InitializeComponent();
 
-            Text = "FeltIS · Панель управления";
-            Width = 980;
-            Height = 620;
-            MinimumSize = new Size(900, 560);
+            Text = "Лабораторная работа №4";
+            Width = 1040;
+            Height = 680;
+            MinimumSize = new Size(920, 580);
             StartPosition = FormStartPosition.CenterScreen;
             BackColor = Color.FromArgb(245, 247, 251);
             Font = new Font("Segoe UI", 10F);
 
+            var root = new TableLayoutPanel
+            {
+                Dock = DockStyle.Fill,
+                RowCount = 2,
+                ColumnCount = 1
+            };
+            root.RowStyles.Add(new RowStyle(SizeType.Absolute, 120));
+            root.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
+            Controls.Add(root);
+
+            var header = BuildHeader();
+            root.Controls.Add(header, 0, 0);
+
+            var content = BuildContent();
+            root.Controls.Add(content, 0, 1);
+        }
+
+        private Panel BuildHeader()
+        {
             var header = new Panel
             {
-                Dock = DockStyle.Top,
-                Height = 110,
-                BackColor = Color.FromArgb(32, 57, 99)
+                Dock = DockStyle.Fill,
+                BackColor = Color.FromArgb(32, 57, 99),
+                Padding = new Padding(24, 18, 24, 18)
             };
 
             var title = new Label
             {
-                Text = "FeltIS",
+                Text = "Лабораторная работа №4",
                 ForeColor = Color.White,
-                Font = new Font("Segoe UI Semibold", 24F, FontStyle.Bold),
+                Font = new Font("Segoe UI Semibold", 20F, FontStyle.Bold),
                 AutoSize = true,
-                Left = 24,
-                Top = 18
+                Dock = DockStyle.Top
             };
 
             var subtitle = new Label
             {
-                Text = "Управление заказами, платежами и аналитикой в одном окне",
+                Text = "Управление заказами, платежами и отчётностью",
                 ForeColor = Color.FromArgb(215, 225, 245),
                 AutoSize = true,
-                Left = 27,
-                Top = 68
+                Dock = DockStyle.Top,
+                Padding = new Padding(0, 8, 0, 0)
             };
 
             lblDbStatus = new Label
             {
                 Text = "Проверка подключения к базе...",
                 ForeColor = Color.White,
-                AutoSize = false,
-                TextAlign = ContentAlignment.MiddleRight,
-                Width = 380,
-                Height = 24,
-                Top = 42,
-                Left = Width - 430,
-                Anchor = AnchorStyles.Top | AnchorStyles.Right
+                AutoSize = true,
+                Anchor = AnchorStyles.Top | AnchorStyles.Right,
+                TextAlign = ContentAlignment.TopRight,
+                Location = new Point(730, 24)
             };
 
-            header.Controls.Add(title);
-            header.Controls.Add(subtitle);
             header.Controls.Add(lblDbStatus);
-            Controls.Add(header);
+            header.Controls.Add(subtitle);
+            header.Controls.Add(title);
 
+            header.Resize += (s, e) =>
+            {
+                lblDbStatus.Left = Math.Max(24, header.Width - lblDbStatus.Width - 24);
+                lblDbStatus.Top = 26;
+            };
+
+            return header;
+        }
+
+        private TableLayoutPanel BuildContent()
+        {
             var content = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill,
-                Padding = new Padding(24),
+                Padding = new Padding(20),
                 ColumnCount = 2,
                 RowCount = 2
             };
@@ -76,12 +101,35 @@ namespace Lab4_FeltIS
             content.RowStyles.Add(new RowStyle(SizeType.Percent, 50));
             content.RowStyles.Add(new RowStyle(SizeType.Percent, 50));
 
-            content.Controls.Add(CreateFeatureCard("Новый заказ", "Оформление заказа с транзакционным сохранением.", "Открыть", () => new OrdersForm().ShowDialog(), Color.FromArgb(65, 133, 244)), 0, 0);
-            content.Controls.Add(CreateFeatureCard("Журнал платежей", "Фильтрация по периоду, поиску и сумме.", "Открыть", () => new JournalForm().ShowDialog(), Color.FromArgb(15, 157, 88)), 1, 0);
-            content.Controls.Add(CreateFeatureCard("Отчёт по моделям", "Аналитика продаж с выбором периода.", "Открыть", () => new ReportForm().ShowDialog(), Color.FromArgb(244, 160, 0)), 0, 1);
-            content.Controls.Add(CreateFeatureCard("Проверка БД", "Быстрый тест подключения и чтения данных.", "Проверить", () => CheckDbConnection(true), Color.FromArgb(171, 71, 188)), 1, 1);
+            content.Controls.Add(CreateFeatureCard(
+                "Новый заказ",
+                "Оформление заказа с транзакционным сохранением.",
+                "Открыть",
+                () => new OrdersForm().ShowDialog(),
+                Color.FromArgb(65, 133, 244)), 0, 0);
 
-            Controls.Add(content);
+            content.Controls.Add(CreateFeatureCard(
+                "Журнал платежей",
+                "Фильтрация по периоду, поиску и сумме.",
+                "Открыть",
+                () => new JournalForm().ShowDialog(),
+                Color.FromArgb(15, 157, 88)), 1, 0);
+
+            content.Controls.Add(CreateFeatureCard(
+                "Отчёт по моделям",
+                "Аналитика продаж с выбором периода.",
+                "Открыть",
+                () => new ReportForm().ShowDialog(),
+                Color.FromArgb(244, 160, 0)), 0, 1);
+
+            content.Controls.Add(CreateFeatureCard(
+                "Проверка БД",
+                "Быстрый тест подключения и чтения данных.",
+                "Проверить",
+                () => CheckDbConnection(true),
+                Color.FromArgb(171, 71, 188)), 1, 1);
+
+            return content;
         }
 
         private Panel CreateFeatureCard(string title, string description, string buttonText, Action action, Color accent)
@@ -91,55 +139,69 @@ namespace Lab4_FeltIS
                 Dock = DockStyle.Fill,
                 Margin = new Padding(10),
                 BackColor = Color.White,
-                Padding = new Padding(18)
+                Padding = new Padding(14)
             };
+
+            var layout = new TableLayoutPanel
+            {
+                Dock = DockStyle.Fill,
+                ColumnCount = 1,
+                RowCount = 4
+            };
+            layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 6));
+            layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 50));
+            layout.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
+            layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 54));
 
             var accentBar = new Panel
             {
                 BackColor = accent,
-                Dock = DockStyle.Top,
-                Height = 6
+                Dock = DockStyle.Fill,
+                Margin = new Padding(0, 0, 0, 8)
             };
 
             var lblTitle = new Label
             {
                 Text = title,
                 Font = new Font("Segoe UI Semibold", 14F, FontStyle.Bold),
-                AutoSize = true,
-                Top = 26,
-                Left = 18
+                Dock = DockStyle.Fill,
+                TextAlign = ContentAlignment.BottomLeft,
+                AutoEllipsis = true,
+                Margin = new Padding(2, 0, 2, 0)
             };
 
             var lblDesc = new Label
             {
                 Text = description,
                 ForeColor = Color.FromArgb(70, 70, 70),
+                Dock = DockStyle.Fill,
                 AutoSize = false,
-                Width = 360,
-                Height = 56,
-                Top = 64,
-                Left = 18
+                Margin = new Padding(2, 6, 2, 6)
             };
 
             var button = new Button
             {
                 Text = buttonText,
-                Width = 140,
+                Width = 150,
                 Height = 36,
-                Left = 18,
-                Top = 130,
                 BackColor = accent,
                 ForeColor = Color.White,
-                FlatStyle = FlatStyle.Flat
+                FlatStyle = FlatStyle.Flat,
+                Anchor = AnchorStyles.Left | AnchorStyles.Top
             };
             button.FlatAppearance.BorderSize = 0;
             button.Click += (s, e) => action();
 
-            card.Controls.Add(accentBar);
-            card.Controls.Add(lblTitle);
-            card.Controls.Add(lblDesc);
-            card.Controls.Add(button);
+            var buttonPanel = new Panel { Dock = DockStyle.Fill };
+            button.Location = new Point(2, 8);
+            buttonPanel.Controls.Add(button);
 
+            layout.Controls.Add(accentBar, 0, 0);
+            layout.Controls.Add(lblTitle, 0, 1);
+            layout.Controls.Add(lblDesc, 0, 2);
+            layout.Controls.Add(buttonPanel, 0, 3);
+
+            card.Controls.Add(layout);
             return card;
         }
 
