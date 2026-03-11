@@ -79,7 +79,7 @@ namespace Lab4_FeltIS
             content.Controls.Add(CreateFeatureCard("Новый заказ", "Оформление заказа с транзакционным сохранением.", "Открыть", () => new OrdersForm().ShowDialog(), Color.FromArgb(65, 133, 244)), 0, 0);
             content.Controls.Add(CreateFeatureCard("Журнал платежей", "Фильтрация по периоду, поиску и сумме.", "Открыть", () => new JournalForm().ShowDialog(), Color.FromArgb(15, 157, 88)), 1, 0);
             content.Controls.Add(CreateFeatureCard("Отчёт по моделям", "Аналитика продаж с выбором периода.", "Открыть", () => new ReportForm().ShowDialog(), Color.FromArgb(244, 160, 0)), 0, 1);
-            content.Controls.Add(CreateFeatureCard("Проверка БД", "Быстрый тест подключения и чтения данных.", "Проверить", BtnTestDb_Click, Color.FromArgb(171, 71, 188)), 1, 1);
+            content.Controls.Add(CreateFeatureCard("Проверка БД", "Быстрый тест подключения и чтения данных.", "Проверить", () => CheckDbConnection(true), Color.FromArgb(171, 71, 188)), 1, 1);
 
             Controls.Add(content);
         }
