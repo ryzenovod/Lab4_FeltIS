@@ -1,0 +1,14 @@
+C:\Users\ryzenovod\source\repos\Lab4_FeltIS\obj\Debug\Lab4_FeltIS.csproj.AssemblyReference.cache
+C:\Users\ryzenovod\source\repos\Lab4_FeltIS\obj\Debug\Lab4_FeltIS.Properties.Resources.resources
+C:\Users\ryzenovod\source\repos\Lab4_FeltIS\obj\Debug\Lab4_FeltIS.csproj.GenerateResource.cache
+C:\Users\ryzenovod\source\repos\Lab4_FeltIS\obj\Debug\Lab4_FeltIS.csproj.CoreCompileInputs.cache
+C:\Users\ryzenovod\source\repos\Lab4_FeltIS\obj\Debug\Lab4_FeltIS.MainForm.resources
+C:\Users\ryzenovod\source\repos\Lab4_FeltIS\bin\Debug\Lab4_FeltIS.exe.config
+C:\Users\ryzenovod\source\repos\Lab4_FeltIS\bin\Debug\Lab4_FeltIS.exe
+C:\Users\ryzenovod\source\repos\Lab4_FeltIS\bin\Debug\Lab4_FeltIS.pdb
+C:\Users\ryzenovod\source\repos\Lab4_FeltIS\obj\Debug\Lab4_FeltIS.exe
+C:\Users\ryzenovod\source\repos\Lab4_FeltIS\obj\Debug\Lab4_FeltIS.pdb
+C:\Users\ryzenovod\source\repos\Lab4_FeltIS\obj\Debug\Lab4_FeltIS.JournalForm.resources
+C:\Users\ryzenovod\source\repos\Lab4_FeltIS\obj\Debug\Lab4_FeltIS.OrderDocumentForm.resources
+C:\Users\ryzenovod\source\repos\Lab4_FeltIS\obj\Debug\Lab4_FeltIS.OrdersForm.resources
+C:\Users\ryzenovod\source\repos\Lab4_FeltIS\obj\Debug\Lab4_FeltIS.ReportForm.resources
